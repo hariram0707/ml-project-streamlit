@@ -1,18 +1,22 @@
 import streamlit as st
-import joblib
 import pandas as pd
+import joblib
 
 model = joblib.load("naive_bayes_model.pkl")
 
-st.title("ML Prediction App")
-
-st.write("Enter values:")
-
-x1 = st.number_input("Feature 1")
-x2 = st.number_input("Feature 2")
-x3 = st.number_input("Feature 3")
+x1 = st.number_input("Tool Diversity")
+x2 = st.number_input("Weekly GenAI Hours")
+x3 = st.number_input("Traditional Study Hours")
 
 if st.button("Predict"):
-    data = pd.DataFrame([[x1, x2, x3]])
+    data = pd.DataFrame(
+        [[x1, x2, x3]],
+        columns=[
+            'Tool_Diversity',
+            'Weekly_GenAI_Hours',
+            'Traditional_Study_Hours'
+        ]
+    )
+
     prediction = model.predict(data)
-    st.success(f"Prediction: {prediction[0]}")
+    st.success(f"Predicted GPA: {prediction[0]:.2f}")
